@@ -1,1 +1,6 @@
 # Write it!
+
+OpenProject/UseServiceResultFactoryMethods:
+  Description: 'Use ServiceResult factory methods instead of ServiceResult.new.'
+  Enabled: true
+  VersionAdded: '0.1.0'
