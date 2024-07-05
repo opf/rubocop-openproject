@@ -25,13 +25,11 @@ module RuboCop
       #   # good
       #   ServiceResult.new(**kwargs)
       class UseServiceResultFactoryMethods < Base
-        extend RuboCop::Cop::AutoCorrector
+        extend AutoCorrector
 
         MSG = "Use ServiceResult.%<factory_method>s(...) instead of ServiceResult.new(success: %<success_value>s, ...)."
         MSG_IMPLICIT_FAILURE = "Use ServiceResult.failure instead of ServiceResult.new."
 
-        # TODO: Don't call `on_send` unless the method name is in this list
-        # If you don't need `on_send` in the cop you created, remove it.
         RESTRICT_ON_SEND = %i[new].freeze
 
         def_node_matcher :service_result_constructor?, <<~PATTERN

@@ -1,4 +1,7 @@
-# Write it!
+OpenProject/NoDoEndBlockWithRSpecCapybaraMatcherInExpect:
+  Description: 'Use `{ .. }` syntax with Capybara rspec matchers instead of `do .. end`.'
+  Enabled: true
+  VersionAdded: '0.1.0'
 
 OpenProject/UseServiceResultFactoryMethods:
   Description: 'Use ServiceResult factory methods instead of ServiceResult.new.'

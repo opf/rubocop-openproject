@@ -1,3 +1,4 @@
 # frozen_string_literal: true
 
+require_relative 'open_project/no_do_end_block_with_rspec_capybara_matcher_in_expect'
 require_relative "open_project/use_service_result_factory_methods"
