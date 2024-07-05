@@ -32,8 +32,6 @@ module RuboCop
       #   end
       #
       class NoDoEndBlockWithRSpecCapybaraMatcherInExpect < Base
-        # extend AutoCorrector
-
         CAPYBARA_MATCHER_METHODS = %w[selector css xpath text title current_path link button
                                       field checked_field unchecked_field select table
                                       sibling ancestor].flat_map do |matcher_type|

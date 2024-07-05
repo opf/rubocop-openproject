@@ -1,3 +1,8 @@
+OpenProject/AddPreviewForViewComponent:
+  Description: 'Add a preview for the ViewComponent.'
+  Enabled: true
+  VersionAdded: '0.1.0'
+
 OpenProject/NoDoEndBlockWithRSpecCapybaraMatcherInExpect:
   Description: 'Use `{ .. }` syntax with Capybara rspec matchers instead of `do .. end`.'
   Enabled: true
