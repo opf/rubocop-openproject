@@ -1,0 +1,10 @@
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+
+Naming/FileName:
+ Exclude:
+   - lib/rubocop-openproject.rb
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
