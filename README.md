@@ -8,7 +8,7 @@ This is a collection of the cops written to be used in the
 Add this gem to the `Gemfile`:
 
 ```ruby
-gem "rubocop-openproject", github: "opf/rubocop-openproject", branch: "main", require: false
+gem "rubocop-openproject", require: false
 ```
 
 Run `bundle install`.
