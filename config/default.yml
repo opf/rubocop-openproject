@@ -8,6 +8,11 @@ OpenProject/NoDoEndBlockWithRSpecCapybaraMatcherInExpect:
   Enabled: true
   VersionAdded: '0.1.0'
 
+OpenProject/NoSleepInFeatureSpecs:
+  Description: 'Avoid using `sleep` greater than 1 second in feature specs.'
+  Enabled: true
+  VersionAdded: '0.1.0'
+
 OpenProject/UseServiceResultFactoryMethods:
   Description: 'Use ServiceResult factory methods instead of ServiceResult.new.'
   Enabled: true
