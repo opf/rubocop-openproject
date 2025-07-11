@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.3.0] - 2025-07-11
+
+- Remove redundant NoDoEndBlockWithRSpecCapybaraMatcherInExpect cop
+
 ## [0.2.0] - 2024-10-18
 
 - Add `OpenProject/NoSleepInFeatureSpecs` cop to check that `sleep` calls in
