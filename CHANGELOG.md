@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.4.0] - 2026-03-27
+
+- Add NoNotImplementedError cop
+
 ## [0.3.0] - 2025-07-11
 
 - Remove redundant NoDoEndBlockWithRSpecCapybaraMatcherInExpect cop
