@@ -8,6 +8,11 @@ OpenProject/NoDoEndBlockWithRSpecCapybaraMatcherInExpect:
   Enabled: true
   VersionAdded: '0.1.0'
 
+OpenProject/NoNotImplementedError:
+  Description: 'Do not raise `NotImplementedError` to signal an unimplemented abstract method.'
+  Enabled: true
+  VersionAdded: '0.4.0'
+
 OpenProject/NoSleepInFeatureSpecs:
   Description: 'Avoid using `sleep` greater than 1 second in feature specs.'
   Enabled: true
