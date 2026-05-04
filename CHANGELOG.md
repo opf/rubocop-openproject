@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- Add `OpenProject/NoParamsInWorkPackageWhereId` cop to catch
+  `WorkPackage.where(id: params[...])` patterns that silently drop semantic
+  identifiers (e.g. `"PROJ-42"`) when PostgreSQL casts the string to integer 0.
+
 ## [0.4.0] - 2026-03-27
 
 - Add NoNotImplementedError cop
