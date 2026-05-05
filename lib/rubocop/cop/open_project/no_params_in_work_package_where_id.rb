@@ -10,10 +10,14 @@ module RuboCop
       # resolver `WorkPackage.where_display_id_in(...)` which partitions
       # numeric and semantic inputs and consults the alias table.
       #
-      # The cop only fires when the receiver chain demonstrably starts at the
-      # `WorkPackage` constant and the value is derived from `params[...]`.
-      # Internal subquery composition (`where(id: scope.pluck(:id))`) and
-      # primary-key literals are left alone.
+      # The cop fires when the receiver chain demonstrably resolves to a
+      # WorkPackage relation — either rooted at the `WorkPackage` constant or
+      # passing through an association call whose name ends in
+      # `work_packages` (e.g. `project.work_packages`,
+      # `user.assigned_work_packages`) — and the value is derived from
+      # `params[...]`. Internal subquery composition
+      # (`where(id: scope.pluck(:id))`) and primary-key literals are left
+      # alone.
       #
       # @example
       #   # bad
@@ -25,8 +29,17 @@ module RuboCop
       #   # bad
       #   WorkPackage.includes(:project).where(id: params[:ids])
       #
+      #   # bad
+      #   project.work_packages.where(id: params[:work_package_id])
+      #
+      #   # bad
+      #   current_user.assigned_work_packages.where(id: params[:ids])
+      #
       #   # good
       #   WorkPackage.where_display_id_in(params[:work_package_id])
+      #
+      #   # good
+      #   project.work_packages.where_display_id_in(params[:work_package_id])
       #
       #   # good (primary key, not user input)
       #   WorkPackage.where(id: 42)
@@ -46,12 +59,15 @@ module RuboCop
           (send (send nil? :params) :[] _)
         PATTERN
 
-        # A receiver that traces back through any chain of sends to the
-        # `WorkPackage` constant — covers `WorkPackage`, `WorkPackage.foo`,
-        # `WorkPackage.foo.bar(:baz)`, etc.
+        # A receiver that traces back through any chain of sends to either:
+        #   - the `WorkPackage` constant: `WorkPackage`, `WorkPackage.foo`, ...
+        #   - an association call whose name ends in `work_packages`:
+        #     `project.work_packages`, `user.assigned_work_packages`, ...
+        # The recursion handles arbitrarily deep chains in either form.
         def_node_matcher :work_package_relation?, <<~PATTERN
           {
             (const nil? :WorkPackage)
+            (send _ #work_package_association? ...)
             (send #work_package_relation? _ ...)
           }
         PATTERN
@@ -89,6 +105,10 @@ module RuboCop
           return false unless node.or_type?
 
           node.children.all? { |child| autocorrectable_value?(child) }
+        end
+
+        def work_package_association?(method_name)
+          method_name.to_s.end_with?("work_packages")
         end
       end
     end

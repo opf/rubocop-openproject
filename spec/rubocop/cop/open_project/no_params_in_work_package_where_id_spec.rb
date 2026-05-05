@@ -53,6 +53,47 @@ RSpec.describe RuboCop::Cop::OpenProject::NoParamsInWorkPackageWhereId, :config 
     end
   end
 
+  context "when the receiver is an association ending in work_packages" do
+    it "registers an offense for `project.work_packages.where(id: params[...])`" do
+      expect_offense(<<~RUBY)
+        project.work_packages.where(id: params[:work_package_id])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ OpenProject/NoParamsInWorkPackageWhereId: #{described_class::MSG}
+      RUBY
+
+      expect_correction(<<~RUBY)
+        project.work_packages.where_display_id_in(params[:work_package_id])
+      RUBY
+    end
+
+    it "registers an offense for an `_work_packages`-suffixed association" do
+      expect_offense(<<~RUBY)
+        current_user.assigned_work_packages.where(id: params[:ids])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ OpenProject/NoParamsInWorkPackageWhereId: #{described_class::MSG}
+      RUBY
+
+      expect_correction(<<~RUBY)
+        current_user.assigned_work_packages.where_display_id_in(params[:ids])
+      RUBY
+    end
+
+    it "registers an offense when the association is followed by a chain" do
+      expect_offense(<<~RUBY)
+        project.work_packages.includes(:project).where(id: params[:ids])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ OpenProject/NoParamsInWorkPackageWhereId: #{described_class::MSG}
+      RUBY
+
+      expect_correction(<<~RUBY)
+        project.work_packages.includes(:project).where_display_id_in(params[:ids])
+      RUBY
+    end
+
+    it "does not register an offense for an unrelated association name" do
+      expect_no_offenses(<<~RUBY)
+        project.users.where(id: params[:id])
+      RUBY
+    end
+  end
+
   context "when params is wrapped in a method call (non-autocorrectable)" do
     it "registers an offense without an autocorrection" do
       expect_offense(<<~RUBY)
