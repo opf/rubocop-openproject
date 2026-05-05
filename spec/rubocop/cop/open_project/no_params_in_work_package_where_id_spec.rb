@@ -105,6 +105,17 @@ RSpec.describe RuboCop::Cop::OpenProject::NoParamsInWorkPackageWhereId, :config 
     end
   end
 
+  context "when the hash carries additional predicates" do
+    it "registers an offense without an autocorrection (would silently drop other predicates)" do
+      expect_offense(<<~RUBY)
+        WorkPackage.where(id: params[:id], project_id: 5)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ OpenProject/NoParamsInWorkPackageWhereId: #{described_class::MSG}
+      RUBY
+
+      expect_no_corrections
+    end
+  end
+
   context "when the predicate key is not :id" do
     it "does not register an offense" do
       expect_no_offenses(<<~RUBY)

@@ -75,11 +75,12 @@ module RuboCop
         def on_send(node)
           return unless work_package_relation?(node.receiver)
 
-          id_value = id_value_from_hash(node.first_argument)
+          hash_arg = node.first_argument
+          id_value = id_value_from_hash(hash_arg)
           return unless id_value && value_uses_params?(id_value)
 
           add_offense(node) do |corrector|
-            next unless autocorrectable_value?(id_value)
+            next unless autocorrectable_value?(id_value) && sole_id_predicate?(hash_arg)
 
             corrector.replace(node, "#{node.receiver.source}.where_display_id_in(#{id_value.source})")
           end
@@ -92,6 +93,13 @@ module RuboCop
 
           pair = arg.pairs.find { |p| p.key.sym_type? && p.key.value == :id }
           pair&.value
+        end
+
+        # Refuse to autocorrect when the hash carries additional predicates
+        # (e.g. `where(id: params[:id], project_id: 5)`); rewriting to
+        # `where_display_id_in(params[:id])` would silently drop them.
+        def sole_id_predicate?(hash_arg)
+          hash_arg.pairs.size == 1
         end
 
         def value_uses_params?(node)
