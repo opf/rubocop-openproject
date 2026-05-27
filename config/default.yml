@@ -23,6 +23,11 @@ OpenProject/NoSleepInFeatureSpecs:
   Enabled: true
   VersionAdded: '0.1.0'
 
+OpenProject/UseRenderModeInsteadOfPrimitives:
+  Description: 'Use `render_mode:` instead of `static_html:`/`plain_text:`/`only_path:` on `format_text`.'
+  Enabled: true
+  VersionAdded: '0.6.0'
+
 OpenProject/UseServiceResultFactoryMethods:
   Description: 'Use ServiceResult factory methods instead of ServiceResult.new.'
   Enabled: true
