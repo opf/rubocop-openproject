@@ -1,0 +1,13 @@
+{
+    "name": "@openproject/rubocop-openproject",
+    "private": true,
+    "author": "OpenProject GmbH",
+    "version": "0.5.0",
+    "license": "MIT",
+    "scripts": {
+        "changeset:version": "./node_modules/.bin/changeset version && script/version"
+    },
+    "devDependencies": {
+        "@changesets/cli": "^2.27.1"
+    }
+}

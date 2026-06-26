@@ -1,0 +1,12 @@
+#!/bin/bash
+set -e
+
+PACKAGE_VERSION=$(jq '.version' --raw-output ./package.json)
+TAG_NAME="v$PACKAGE_VERSION"
+
+# only push if the tag does not exist
+if ! git ls-remote --exit-code --tags origin "$TAG_NAME" > /dev/null; then
+  echo "New tag:"
+  git tag "$TAG_NAME"
+  git push origin "$TAG_NAME"
+fi

@@ -9,3 +9,6 @@
 
 # rspec failure tracking
 .rspec_status
+
+# changesets tooling
+/node_modules/
