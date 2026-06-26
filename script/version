@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+# frozen_string_literal: true
+
+# Syncs the gem version (lib/rubocop/open_project/version.rb) to the version
+# `changeset version` just wrote into package.json.
+
+require "json"
+
+package_file = File.expand_path("../package.json", __dir__)
+new_version = JSON.parse(File.read(package_file))["version"]
+
+version_file = File.expand_path("../lib/rubocop/open_project/version.rb", __dir__)
+contents = File.read(version_file)
+File.write(version_file, contents.gsub(/VERSION = ".+?"/, "VERSION = \"#{new_version}\""))
