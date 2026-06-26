@@ -24,16 +24,19 @@ require:
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
+
+When working on a change, add a changeset describing it: run `npx changeset`
+(or `./node_modules/.bin/changeset` after `npm install`), pick the bump
+(`patch` / `minor` / `major`), and write a short summary. This adds a file under
+`.changeset/`; commit it with your PR. The release automation turns accumulated
+changesets into the next version bump and `CHANGELOG.md` entry.
 
 ## Releasing
 
-1. Update the version in `lib/rubocop/open_project/version.rb`
-2. Update the changelog in `CHANGELOG.md`
-3. Run `bundle install` to update `Gemfile.lock`
-4. Run `rake` to check everything is fine and fix any issues
-5. Commit your changes (`git commit -am 'Prepare release X.Y.Z'`)
-6. Run `bundle exec rake release`
+Releases are driven by [changesets](https://github.com/changesets/changesets) and
+GitHub Actions, so no RubyGems credentials are needed on your machine. See
+[.github/RELEASING.md](.github/RELEASING.md) for the flow and one-time setup.
 
 ## Contributing
 

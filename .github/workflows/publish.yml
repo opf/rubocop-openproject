@@ -1,0 +1,40 @@
+on:
+  release:
+    types: [published]
+name: Publish rubocop-openproject to rubygems
+
+# Least-privilege default; git pushes use the OPENRPOJECTCI_GH_TOKEN PAT from
+# checkout and the gem push uses ~/.gem/credentials, so GITHUB_TOKEN needs no more.
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on:
+      labels:
+        - runs-on
+        - run-id=${{ github.run_id }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.OPENRPOJECTCI_GH_TOKEN }}
+          fetch-depth: 0
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - name: Create .gem credentials
+        run: |
+          mkdir -p $HOME/.gem
+          cat << EOF > $HOME/.gem/credentials
+          ---
+          :rubygems_api_key: ${RUBYGEMS_TOKEN}
+          EOF
+          chmod 0600 $HOME/.gem/credentials
+        env:
+          RUBYGEMS_TOKEN: ${{ secrets.RUBYGEMS_TOKEN_SHARED }}
+      - name: Publish Gem
+        run: |
+          bundle install
+          bundle exec rake release
