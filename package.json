@@ -2,7 +2,7 @@
     "name": "@openproject/rubocop-openproject",
     "private": true,
     "author": "OpenProject GmbH",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "license": "MIT",
     "scripts": {
         "changeset:version": "./node_modules/.bin/changeset version && script/version"

@@ -1,5 +1,11 @@
 # rubocop-openproject
 
+## 0.6.0
+
+### Minor Changes
+
+- 6e7b812: Add `OpenProject/UseRenderModeInsteadOfPrimitives` cop to flag `format_text` calls that pass the external-rendering primitive flags (`static_html: true`, `plain_text: true`, `only_path: false`) instead of the canonical `render_mode:` API or the `format_mail_html` / `format_mail_text` mailer view helpers.
+
 ## [0.5.0] - 2026-05-05
 
 - Add `OpenProject/NoParamsInWorkPackageWhereId` cop to catch
