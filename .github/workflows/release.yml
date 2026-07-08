@@ -21,7 +21,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.OPENRPOJECTCI_GH_TOKEN }}
+          token: ${{ secrets.OPENPROJECTCI_GH_TOKEN }}
           fetch-depth: 0
 
       - name: Setup Ruby
@@ -50,4 +50,4 @@ jobs:
           version: npm run changeset:version
           publish: script/changeset-publish
         env:
-          GITHUB_TOKEN: ${{ secrets.OPENRPOJECTCI_GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.OPENPROJECTCI_GH_TOKEN }}

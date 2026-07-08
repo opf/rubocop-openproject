@@ -28,7 +28,7 @@ changesets and merging the Release Tracking PR.
 
 These org-level secrets must be available to this repository:
 
-- **`OPENRPOJECTCI_GH_TOKEN`** - the `openprojectci` GitHub token used to
+- **`OPENPROJECTCI_GH_TOKEN`** - the `openprojectci` GitHub token used to
   check out, open the Release Tracking PR, and push the tag. (A standard
   `GITHUB_TOKEN` is not used because PRs it opens do not trigger CI, and it
   cannot push to a protected `main`.)

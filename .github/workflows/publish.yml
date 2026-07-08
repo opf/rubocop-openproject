@@ -3,7 +3,7 @@ on:
     types: [published]
 name: Publish rubocop-openproject to rubygems
 
-# Least-privilege default; git pushes use the OPENRPOJECTCI_GH_TOKEN PAT from
+# Least-privilege default; git pushes use the OPENPROJECTCI_GH_TOKEN PAT from
 # checkout and the gem push uses ~/.gem/credentials, so GITHUB_TOKEN needs no more.
 permissions:
   contents: read
@@ -18,7 +18,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.OPENRPOJECTCI_GH_TOKEN }}
+          token: ${{ secrets.OPENPROJECTCI_GH_TOKEN }}
           fetch-depth: 0
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
