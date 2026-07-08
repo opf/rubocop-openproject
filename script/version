@@ -13,3 +13,10 @@ new_version = JSON.parse(File.read(package_file))["version"]
 version_file = File.expand_path("../lib/rubocop/open_project/version.rb", __dir__)
 contents = File.read(version_file)
 File.write(version_file, contents.gsub(/VERSION = ".+?"/, "VERSION = \"#{new_version}\""))
+
+# Keep Gemfile.lock's path-gem pin in sync with the new version, otherwise
+# frozen bundler installs (CI, `bundler-cache: true`) fail because the gemspec
+# version no longer matches the lockfile.
+Dir.chdir(File.expand_path("..", __dir__)) do
+  system("bundle", "lock") || abort("bundle lock failed")
+end
