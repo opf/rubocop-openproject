@@ -23,6 +23,11 @@ OpenProject/NoSleepInFeatureSpecs:
   Enabled: true
   VersionAdded: '0.1.0'
 
+OpenProject/UseEffectiveTypeForConfiguration:
+  Description: 'Read a type''s configuration through `effective_type`, not `type`, so the project''s variant is honoured.'
+  Enabled: true
+  VersionAdded: '0.7.0'
+
 OpenProject/UseRenderModeInsteadOfPrimitives:
   Description: 'Use `render_mode:` instead of `static_html:`/`plain_text:`/`only_path:` on `format_text`.'
   Enabled: true
