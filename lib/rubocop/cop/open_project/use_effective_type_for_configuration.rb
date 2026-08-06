@@ -34,6 +34,10 @@ module RuboCop
       #   # bad — inside WorkPackage itself
       #   type.statuses(include_default: true)
       #
+      #   # bad — safe navigation on either side reads the root just the same
+      #   represented.type&.attribute_groups
+      #   model&.type.enabled_patterns
+      #
       #   # good
       #   work_package.effective_type.attribute_groups
       #
@@ -51,7 +55,9 @@ module RuboCop
               "the family's root, so this ignores the variant the project resolves to."
 
         # Configuration aspects, per Type::ConfigurationLink::ASPECTS and the readers
-        # Type::ConfigurationLinkable resolves through the link chain.
+        # Type::ConfigurationLinkable resolves through the link chain, plus the derived readers
+        # that sit on top of one — `enabled_patterns` and `replacement_pattern_defined_for?`
+        # both resolve through `patterns` and are just as variant-specific.
         CONFIGURATION_METHODS = %i[
           artefact_export_enabled?
           artefact_export_mode
@@ -59,18 +65,22 @@ module RuboCop
           custom_field_ids
           custom_fields
           description
+          enabled_patterns
           export_templates_disabled
           export_templates_order
           patterns
           project_custom_field_type_mappings
+          replacement_pattern_defined_for?
           statuses
           workflows
         ].freeze
 
         RESTRICT_ON_SEND = CONFIGURATION_METHODS
 
+        # Both node types on both sides: `type&.attribute_groups` reads the root exactly like
+        # `type.attribute_groups` does, and the mistake is written with `&.` at least as often.
         def_node_matcher :type_call?, <<~PATTERN
-          (send _ :type)
+          ({send csend} _ :type)
         PATTERN
 
         def on_send(node)
@@ -78,6 +88,7 @@ module RuboCop
 
           add_offense(node)
         end
+        alias on_csend on_send
       end
     end
   end

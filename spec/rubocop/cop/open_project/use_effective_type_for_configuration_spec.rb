@@ -51,6 +51,37 @@ RSpec.describe RuboCop::Cop::OpenProject::UseEffectiveTypeForConfiguration, :con
     end
   end
 
+  # Safe navigation reads the root exactly like a plain call does, and is the shape the mistake
+  # took in the API schema representer, which the cop was live for and did not catch.
+  context "when the read uses safe navigation" do
+    it "registers an offense when the aspect is called with &." do
+      expect_offense(<<~RUBY)
+        represented.type&.attribute_groups
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ OpenProject/UseEffectiveTypeForConfiguration: #{described_class::MSG}
+      RUBY
+    end
+
+    it "registers an offense when the type itself is reached with &." do
+      expect_offense(<<~RUBY)
+        model&.type.enabled_patterns
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ OpenProject/UseEffectiveTypeForConfiguration: #{described_class::MSG}
+      RUBY
+    end
+
+    it "registers an offense when both sides use &." do
+      expect_offense(<<~RUBY)
+        model&.type&.replacement_pattern_defined_for?(:subject)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ OpenProject/UseEffectiveTypeForConfiguration: #{described_class::MSG}
+      RUBY
+    end
+
+    it "registers no offense when effective_type is reached with &." do
+      expect_no_offenses(<<~RUBY)
+        model.effective_type&.enabled_patterns
+      RUBY
+    end
+  end
+
   context "when the read already goes through effective_type" do
     it "registers no offense" do
       expect_no_offenses(<<~RUBY)
