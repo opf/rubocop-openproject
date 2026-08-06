@@ -1,5 +1,5 @@
 ---
-"@openproject/rubocop-openproject": minor
+"@openproject/rubocop-openproject": patch
 ---
 
 Widen `OpenProject/UseEffectiveTypeForConfiguration` to catch safe navigation and the derived
