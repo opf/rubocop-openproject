@@ -8,6 +8,11 @@ OpenProject/NoDoEndBlockWithRSpecCapybaraMatcherInExpect:
   Enabled: true
   VersionAdded: '0.1.0'
 
+OpenProject/NoConditionalPatchGemVersion:
+  Description: 'Call `patch_gem_version` unconditionally so its version check runs on CI.'
+  Enabled: true
+  VersionAdded: '0.8.0'
+
 OpenProject/NoNotImplementedError:
   Description: 'Do not raise `NotImplementedError` to signal an unimplemented abstract method.'
   Enabled: true
