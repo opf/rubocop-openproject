@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubocop-openproject (0.7.1)
+    rubocop-openproject (0.8.0)
       rubocop
 
 GEM
